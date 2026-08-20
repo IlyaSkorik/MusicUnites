@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Музыка объединяет — музыкальная визитка выступления</title>
+<meta name="description" content="Участники сегодняшнего выступления и их социальные сети — всё в одном месте. Отсканируйте QR-код и найдите контакты каждого музыканта.">
+
+<link rel="canonical" href="https://ilyaskorik.vzlettalantov.by">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Музыка объединяет">
+<meta property="og:description" content="Все соцсети и контакты участников выступления — здесь.">
+<meta property="og:url" content="https://ilyaskorik.vzlettalantov.by">
+<meta property="og:locale" content="ru_RU">
+<!-- При желании добавьте og:image со ссылкой на реальную фотографию, например: -->
+<!-- <meta property="og:image" content="https://ilyaskorik.vzlettalantov.by/preview.jpg"> -->
+
+<meta name="theme-color" content="#B08D57">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='24'%20fill='%23FAF7F0'/%3E%3Ccircle%20cx='36'%20cy='68'%20r='14'%20fill='%23B08D57'/%3E%3Crect%20x='46'%20y='24'%20width='6'%20height='46'%20fill='%23B08D57'/%3E%3Cpath%20d='M52%2024%20C70%2028%2074%2040%2068%2050'%20stroke='%23B08D57'%20stroke-width='6'%20fill='none'%20stroke-linecap='round'/%3E%3C/svg%3E">
+
+<style>
+  :root{
+    --bg: #FAF7F1;
+    --bg-alt: #F3ECDE;
+    --paper: #FFFFFF;
+    --text: #2B2A28;
+    --text-muted: #6F6A62;
+    --gold: #B08D57;
+    --gold-light: #D9C09B;
+    --gold-soft: rgba(176,141,87,.14);
+    --line: rgba(176,141,87,.35);
+    --shadow: 0 14px 40px rgba(43,42,40,.08);
+    --shadow-soft: 0 6px 20px rgba(43,42,40,.06);
+    --radius-lg: 22px;
+    --radius-md: 14px;
+    --radius-pill: 999px;
+    --maxw: 1080px;
+    --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg: #1C1A17;
+      --bg-alt: #232019;
+      --paper: #26221D;
+      --text: #F3ECDE;
+      --text-muted: #B5AA98;
+      --gold: #D9B77F;
+      --gold-light: #E8CDA0;
+      --gold-soft: rgba(217,183,127,.14);
+      --line: rgba(217,183,127,.35);
+      --shadow: 0 14px 40px rgba(0,0,0,.35);
+      --shadow-soft: 0 6px 20px rgba(0,0,0,.28);
+    }
+  }
+
+  *,*::before,*::after{ box-sizing: border-box; }
+  html{
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body{
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  img{ max-width: 100%; display: block; }
+
+  h1,h2,h3{
+    font-family: var(--font-serif);
+    font-weight: 600;
+    line-height: 1.15;
+    margin: 0;
+    letter-spacing: .01em;
+  }
+  p{ margin: 0; }
+  a{ color: inherit; }
+
+  .visually-hidden{
+    position: absolute !important;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .skip-link{
+    position: absolute;
+    top: -60px;
+    left: 16px;
+    background: var(--gold);
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: var(--radius-pill);
+    z-index: 100;
+    transition: top .25s ease;
+    font-size: .9rem;
+  }
+  .skip-link:focus{ top: 12px; }
+
+  :focus-visible{
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+  }
+
+  .wrap{
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .divider{
+    height: 1px;
+    max-width: 220px;
+    margin: 0 auto;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: .6;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position: relative;
+    min-height: 92vh;
+    min-height: 92svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 64px 24px 40px;
+    text-align: center;
+    background:
+      radial-gradient(ellipse 70% 55% at 50% 0%, var(--bg-alt) 0%, transparent 70%),
+      var(--bg);
+  }
+
+  .hero__decor{
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: .55;
+  }
+  .hero__decor svg{
+    position: absolute;
+    color: var(--gold);
+  }
+  .hero__decor .waves{
+    left: 0; right: 0; bottom: 8%;
+    width: 100%;
+    height: auto;
+    opacity: .5;
+  }
+  .hero__decor .note-a{ top: 12%; left: 8%; width: 34px; animation: float 7s ease-in-out infinite; }
+  .hero__decor .note-b{ top: 22%; right: 10%; width: 22px; animation: float 9s ease-in-out infinite 1.2s; }
+  .hero__decor .note-c{ bottom: 20%; left: 14%; width: 18px; animation: float 8s ease-in-out infinite .6s; }
+
+  @keyframes float{
+    0%,100%{ transform: translateY(0) rotate(0deg); }
+    50%{ transform: translateY(-14px) rotate(4deg); }
+  }
+
+  .hero__content{
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    opacity: 0;
+    transform: translateY(18px);
+    animation: rise .9s cubic-bezier(.22,.61,.36,1) .15s forwards;
+  }
+
+  @keyframes rise{
+    to{ opacity: 1; transform: translateY(0); }
+  }
+
+  .eyebrow{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: .8rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 22px;
+  }
+  .eyebrow::before,
+  .eyebrow::after{
+    content: "";
+    width: 26px;
+    height: 1px;
+    background: var(--gold);
+    opacity: .7;
+  }
+
+  .hero__title{
+    font-size: clamp(2.1rem, 6.5vw, 3.6rem);
+    color: var(--text);
+  }
+
+  .hero__subtitle{
+    margin-top: 20px;
+    font-size: clamp(1rem, 2.6vw, 1.2rem);
+    color: var(--text-muted);
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .scroll-cue{
+    position: absolute;
+    left: 50%;
+    bottom: 28px;
+    transform: translateX(-50%);
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    color: var(--gold);
+    text-decoration: none;
+    animation: bob 2.4s ease-in-out infinite;
+    transition: background .25s ease, transform .25s ease;
+  }
+  .scroll-cue:hover{ background: var(--gold-soft); }
+  @keyframes bob{
+    0%,100%{ transform: translate(-50%,0); }
+    50%{ transform: translate(-50%,6px); }
+  }
+
+  /* ---------- SECTIONS (generic) ---------- */
+  .section{
+    padding: 72px 24px;
+  }
+  .section-inner{
+    max-width: var(--maxw);
+    margin: 0 auto;
+  }
+
+  .reveal{
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .reveal.is-visible{
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ---------- EVENT INFO ---------- */
+  .event-info{
+    text-align: center;
+  }
+  .event-info .divider{ margin-bottom: 40px; }
+  .event-info__name{
+    font-family: var(--font-serif);
+    font-size: clamp(1.4rem, 3.6vw, 2rem);
+    margin-bottom: 10px;
+  }
+  .event-info__date{
+    color: var(--gold);
+    font-size: .95rem;
+    letter-spacing: .04em;
+    margin-bottom: 16px;
+  }
+  .event-info__desc{
+    color: var(--text-muted);
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
+  /* ---------- PARTICIPANTS ---------- */
+  .participants{ background: var(--bg-alt); }
+  .participants__head{
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .participants__head h2{
+    font-size: clamp(1.6rem, 4.2vw, 2.3rem);
+  }
+  .participants__head p{
+    margin-top: 12px;
+    color: var(--text-muted);
+  }
+
+  .participants-grid{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  @media (min-width: 620px){
+    .participants-grid{ grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 980px){
+    .participants-grid{ grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .participant-card{
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 32px 26px;
+    text-align: center;
+    box-shadow: var(--shadow-soft);
+    transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .participant-card:hover,
+  .participant-card:focus-within{
+    transform: translateY(-6px);
+    box-shadow: var(--shadow);
+    border-color: var(--gold);
+  }
+
+  .participant-card--featured{
+    border-width: 1.5px;
+    border-color: var(--gold);
+    background:
+      linear-gradient(var(--paper), var(--paper)) padding-box,
+      var(--paper);
+    box-shadow: 0 16px 40px rgba(176,141,87,.16);
+    position: relative;
+  }
+  .participant-card--featured::before{
+    content: "";
+    position: absolute;
+    inset: -1.5px;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: linear-gradient(135deg, var(--gold), transparent 60%, var(--gold));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: .8;
+    pointer-events: none;
+  }
+
+  .participant-card__avatar-wrap{
+    width: 108px;
+    height: 108px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 20px;
+    border: 1px solid var(--line);
+    background: var(--bg-alt);
+    flex-shrink: 0;
+  }
+  .participant-card--featured .participant-card__avatar-wrap{
+    width: 124px;
+    height: 124px;
+  }
+  .participant-card__avatar-wrap img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .participant-card__avatar-fallback{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    color: var(--gold);
+    background: var(--gold-soft);
+  }
+
+  .participant-card__name{
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+  }
+
+  .participant-card__role{
+    margin-top: 6px;
+    font-size: .85rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .participant-card__desc{
+    margin-top: 14px;
+    color: var(--text-muted);
+    font-size: .95rem;
+  }
+
+  .participant-card__links{
+    margin-top: 22px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .link-pill{
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    font-size: .85rem;
+    text-decoration: none;
+    color: var(--text);
+    background: transparent;
+    transition: background .25s ease, border-color .25s ease, transform .2s ease;
+  }
+  .link-pill:hover,
+  .link-pill:focus-visible{
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+  .link-pill svg{
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+  }
+
+  .participants-empty{
+    text-align: center;
+    color: var(--text-muted);
+    grid-column: 1 / -1;
+  }
+
+  /* ---------- BOOKING ---------- */
+  .booking{
+    text-align: center;
+  }
+  .booking .divider{ margin-bottom: 36px; }
+  .booking__lead{
+    color: var(--text-muted);
+    margin-bottom: 26px;
+  }
+  .booking-btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 36px;
+    background: var(--gold);
+    color: #fff;
+    text-decoration: none;
+    border-radius: var(--radius-pill);
+    font-size: 1rem;
+    letter-spacing: .02em;
+    box-shadow: var(--shadow-soft);
+    transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+  }
+  .booking-btn:hover,
+  .booking-btn:focus-visible{
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+    background: #9a7847;
+  }
+
+  /* ---------- FOOTER ---------- */
+  .site-footer{
+    padding: 40px 24px 48px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: .85rem;
+    border-top: 1px solid var(--line);
+  }
+  .site-footer .footer-note{
+    margin-top: 6px;
+    opacity: .8;
+  }
+
+  [hidden]{ display: none !important; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *,*::before,*::after{
+      animation-duration: .001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .001ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#participants">Перейти к участникам</a>
+
+<header class="hero" id="hero">
+  <div class="hero__decor" aria-hidden="true">
+    <svg class="waves" viewBox="0 0 600 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 40 C 60 5, 120 75, 180 40 S 300 5, 360 40 S 480 75, 540 40 S 600 20 600 40"
+            fill="none" stroke="currentColor" stroke-width="1.4" opacity=".8"/>
+      <path d="M0 55 C 60 25, 120 85, 180 55 S 300 25, 360 55 S 480 85, 540 55 S 600 40 600 55"
+            fill="none" stroke="currentColor" stroke-width="1" opacity=".4"/>
+    </svg>
+    <svg class="note-a" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="6" cy="18" r="3" fill="currentColor"/>
+      <path d="M9 18V4l9-2v13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="15" cy="15" r="3" fill="currentColor"/>
+    </svg>
+    <svg class="note-b" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="8" cy="17" r="3.2" fill="currentColor"/>
+      <path d="M11.2 17V3.5l7.8-1.8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <svg class="note-c" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="8" cy="17" r="3.2" fill="currentColor"/>
+      <path d="M11.2 17V3.5l7.8-1.8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <div class="hero__content">
+    <span class="eyebrow">Живая музыка</span>
+    <h1 class="hero__title" id="page-title"></h1>
+    <p class="hero__subtitle" id="page-subtitle"></p>
+  </div>
+
+  <a class="scroll-cue" href="#participants" aria-label="Прокрутить к списку участников">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M12 4v16m0 0l-6-6m6 6l6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+</header>
+
+<main>
+
+  <section id="event-info" class="section event-info reveal" hidden aria-labelledby="event-info-heading">
+    <div class="section-inner">
+      <div class="divider" aria-hidden="true"></div>
+      <h2 id="event-info-heading" class="visually-hidden">О мероприятии</h2>
+      <p class="event-info__name" id="event-name" hidden></p>
+      <p class="event-info__date" id="event-date" hidden></p>
+      <p class="event-info__desc" id="event-description" hidden></p>
+    </div>
+  </section>
+
+  <section id="participants" class="section participants" aria-labelledby="participants-heading">
+    <div class="section-inner">
+      <div class="participants__head reveal">
+        <h2 id="participants-heading">Сегодня с нами</h2>
+        <p>Нажмите на ссылку, чтобы перейти в соцсети музыканта</p>
+      </div>
+      <ul class="participants-grid" id="participants-grid"></ul>
+    </div>
+  </section>
+
+  <section id="booking" class="section booking reveal" hidden aria-labelledby="booking-heading">
+    <div class="section-inner">
+      <div class="divider" aria-hidden="true"></div>
+      <h2 id="booking-heading" class="visually-hidden">Пригласить на выступление</h2>
+      <p class="booking__lead">Понравилось выступление?</p>
+      <a class="booking-btn" id="booking-btn" href="#" target="_blank" rel="noopener noreferrer"></a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>&copy; <span id="year"></span> · Музыкальная визитка выступления</p>
+  <p class="footer-note">Состав участников обновляется под каждое мероприятие</p>
+</footer>
+
+<noscript>
+  <p style="text-align:center;padding:24px;">
+    Для корректной работы страницы, пожалуйста, включите JavaScript в браузере.
+  </p>
+</noscript>
+
+<script>
+(function(){
+  "use strict";
+
+  /* =========================================================================
+     КОНФИГУРАЦИЯ МЕРОПРИЯТИЯ
+     Меняйте только этот объект, чтобы обновить мероприятие, состав
+     участников, роли, фото и ссылки. HTML и CSS трогать не нужно.
+
+     participants — массив ЛЮБОЙ длины (1, 2, 5, 10 и больше).
+     У каждого участника:
+       name        — имя (обязательно)
+       role        — инструмент / роль
+       avatar      — ссылка на фото (если пусто — показывается кружок с инициалами)
+       description — короткое описание (необязательно)
+       featured    — true, чтобы карточка была немного заметнее остальных
+       links       — массив { title, url }. Если url пустой — кнопка не показывается.
+                     title можно указывать любой: Instagram, Telegram, VK,
+                     YouTube, TikTok, Spotify, Apple Music, SoundCloud,
+                     WhatsApp, Facebook, X (Twitter), сайт, портфолио,
+                     e-mail, телефон — и любые другие названия.
+  ========================================================================= */
+  const eventConfig = {
+    title: "Музыка объединяет",
+    subtitle: "Все соцсети и контакты участников — здесь",
+
+    event: {
+      name: "Живая Музыка в ТЦ СЕНИЦА",         // например: "Джазовый вечер в «Веранде»"
+      date: "5 августа, 12:00",         // например: "19 августа 2026, 19:00"
+      description: "Фортепианный дуэт"   // например: "Живой сет из фортепиано, скрипки и перкуссии"
+    },
+
+    booking: {
+      text: "Пригласить на выступление",
+      url: "https://t.me/skorik_Ilya"           // например: "https://t.me/ilyaskorik" или "mailto:..."
+    },
+
+    participants: [
+      {
+        name: "Илья Скорик",
+        role: "Фортепиано",
+        avatar: "/ilyaskorik.jpg",
+        description: "",
+        featured: true,
+        links: [
+          { title: "Instagram", url: "https://www.tiktok.com/@ilyaskorik?_r=1&_t=ZS-992VxOdcIQ0" },
+          { title: "YouTube",  url: "https://youtube.com/@belakkord?si=wYssCZr1T7Qde4QK" },
+          { title: "TikTok",  url: "https://www.tiktok.com/@ilyaskorik?_r=1&_t=ZS-992VxOdcIQ0" },
+          { title: "Threads", url: "https://www.threads.com/@ilyaskorik_official" }
+        ]
+      }
+      
+
+      /* Пример добавления ещё одного участника — скопируйте блок,
+         заполните реальными данными и уберите комментарий:
+
+      ,{
+        name: "Имя Фамилия",
+        role: "Скрипка",
+        avatar: "https://example.com/photo.jpg",
+        description: "Короткое описание музыканта",
+        featured: false,
+        links: [
+          { title: "Instagram", url: "" },
+          { title: "Telegram", url: "" },
+          { title: "VK", url: "" },
+          { title: "YouTube", url: "" },
+          { title: "TikTok", url: "" },
+          { title: "Spotify", url: "" },
+          { title: "Сайт", url: "" },
+          { title: "Портфолио", url: "" }
+        ]
+      }
+      */
+    ]
+  };
+
+  /* =========================================================================
+     ИКОНКИ ССЫЛОК
+     Ключевые слова ищутся в названии ссылки (title), без учёта регистра.
+     Если ни одно ключевое слово не подошло — используется иконка-ссылка
+     по умолчанию, так что можно добавлять любые площадки без правок кода.
+  ========================================================================= */
+  const ICONS = {
+    instagram: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg>',
+    telegram: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 4L3 11.5l6 2m12-9.5l-3.5 16-8.5-6.5m12-9.5L9 13.5m0 0v6l3-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    vk: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="6" stroke="currentColor" stroke-width="1.5"/><path d="M7 8.2c.2 3.6 2.1 5.9 5.1 5.9h.6v-2c1.1.1 1.9.9 2.3 2h1.9c-.4-1.6-1.6-2.5-2.3-2.9.7-.4 1.8-1.4 2.1-2.8h-1.8c-.3 1.2-1.3 2.2-2.2 2.3V8.2h-1.8v3.5c-.9-.1-2.1-1.2-2.2-3.5H7z" fill="currentColor"/></svg>',
+    youtube: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2.5" y="5.5" width="19" height="13" rx="4" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 9.5l5 2.5-5 2.5v-5z" fill="currentColor"/></svg>',
+    tiktok: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 3.5c.4 2 1.9 3.4 4 3.6v2.6c-1.5 0-2.9-.5-4-1.3v6.1a5 5 0 1 1-4.3-4.9v2.6a2.4 2.4 0 1 0 1.8 2.3V3.5h2.5z" fill="currentColor"/></svg>',
+    spotify: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M7 10.3c3-.8 6.6-.6 9.3.9M7.5 13.2c2.5-.6 5.5-.5 7.8.7M8 16c2-.5 4.2-.4 6 .5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>',
+    applemusic: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="15.5" r="2" fill="currentColor"/><path d="M12 15.5V8l5-1v6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    soundcloud: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 16v-3M6 16v-5M9 16V8m3 8V6m3 10h4.5a3 3 0 0 0 0-6 4.5 4.5 0 0 0-8.7-1.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    whatsapp: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 18l-1.2 3L8 19.7A8 8 0 1 0 5 15.6L6 18z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 10c0 3 2 5 5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>',
+    facebook: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M13.5 9h1.5V6.5h-2c-1.4 0-2.5 1.1-2.5 2.5v1.5H9V13h1.5v5H13v-5h1.7l.3-2.5H13V9.3c0-.2.1-.3.5-.3z" fill="currentColor"/></svg>',
+    x: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+    website: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M3 12h18M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18" stroke="currentColor" stroke-width="1.4"/></svg>',
+    portfolio: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3.5" y="8" width="17" height="11" rx="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M8.5 8V6.5a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2V8" stroke="currentColor" stroke-width="1.5"/></svg>',
+    email: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3.5" y="5.5" width="17" height="13" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M4.5 7l7.5 6 7.5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    phone: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 4h3l1.5 4.5L8.5 10a10 10 0 0 0 5.5 5.5l1.5-2L20 15v3a2 2 0 0 1-2 2C10.8 20 4 13.2 4 6a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>',
+    link: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 14l4-4M9 17l-2 2a3.5 3.5 0 1 1-5-5l3-3M15 7l3-3a3.5 3.5 0 1 1 5 5l-2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+  };
+
+  const ICON_MATCHERS = [
+    [/insta/i, "instagram"],
+    [/telegram|^tg$|t\.me/i, "telegram"],
+    [/\bvk\b|вконтакте/i, "vk"],
+    [/youtube|ютуб/i, "youtube"],
+    [/tiktok|тикток/i, "tiktok"],
+    [/spotify/i, "spotify"],
+    [/apple\s*music/i, "applemusic"],
+    [/soundcloud/i, "soundcloud"],
+    [/whatsapp|ватсап/i, "whatsapp"],
+    [/facebook|фейсбук/i, "facebook"],
+    [/^x$|twitter/i, "x"],
+    [/сайт|website|веб-?сайт/i, "website"],
+    [/портфолио|portfolio/i, "portfolio"],
+    [/e-?mail|почта|mail/i, "email"],
+    [/телефон|phone|tel\b/i, "phone"]
+  ];
+
+  function iconKeyFor(link){
+    const title = (link.title || "").trim();
+    const url = (link.url || "").trim();
+
+    for (const [re, key] of ICON_MATCHERS){
+      if (re.test(title)) return key;
+    }
+    if (/^mailto:/i.test(url)) return "email";
+    if (/^tel:/i.test(url)) return "phone";
+    return "link";
+  }
+
+  /* =========================================================================
+     ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
+  ========================================================================= */
+  function el(tag, opts){
+    const node = document.createElement(tag);
+    opts = opts || {};
+    if (opts.className) node.className = opts.className;
+    if (opts.text !== undefined) node.textContent = opts.text;
+    if (opts.html !== undefined) node.innerHTML = opts.html;
+    if (opts.attrs){
+      Object.keys(opts.attrs).forEach(k => node.setAttribute(k, opts.attrs[k]));
+    }
+    return node;
+  }
+
+  function initialsFor(name){
+    if (!name) return "?";
+    const parts = name.trim().split(/\s+/).filter(Boolean);
+    const letters = parts.slice(0, 2).map(p => p[0]);
+    return letters.join("").toUpperCase();
+  }
+
+  function setTextOrHide(elementId, value){
+    const node = document.getElementById(elementId);
+    if (!node) return;
+    if (value && String(value).trim() !== ""){
+      node.textContent = value;
+      node.hidden = false;
+    } else {
+      node.hidden = true;
+    }
+  }
+
+  /* =========================================================================
+     РЕНДЕРИНГ
+  ========================================================================= */
+  function renderHero(){
+    document.title = eventConfig.title
+      ? eventConfig.title + " — музыкальная визитка"
+      : "Музыкальная визитка выступления";
+
+    setTextOrHide("page-title", eventConfig.title);
+    setTextOrHide("page-subtitle", eventConfig.subtitle);
+  }
+
+  function renderEventInfo(){
+    const section = document.getElementById("event-info");
+    const ev = eventConfig.event || {};
+    const hasAny = [ev.name, ev.date, ev.description].some(v => v && String(v).trim() !== "");
+
+    if (!hasAny){
+      section.hidden = true;
+      return;
+    }
+
+    section.hidden = false;
+    setTextOrHide("event-name", ev.name);
+    setTextOrHide("event-date", ev.date);
+    setTextOrHide("event-description", ev.description);
+  }
+
+  function buildLinkPill(link){
+    const key = iconKeyFor(link);
+    const svg = ICONS[key] || ICONS.link;
+    const a = el("a", {
+      className: "link-pill",
+      attrs: {
+        href: link.url,
+        target: /^mailto:|^tel:/i.test(link.url) ? "_self" : "_blank",
+        rel: "noopener noreferrer",
+        "aria-label": (link.title || "Ссылка")
+      }
+    });
+    a.innerHTML = svg;
+    const label = el("span", { text: link.title || "Ссылка" });
+    a.appendChild(label);
+    return a;
+  }
+
+  function buildParticipantCard(person){
+    const li = el("li", {
+      className: "participant-card reveal" + (person.featured ? " participant-card--featured" : "")
+    });
+
+    const avatarWrap = el("div", { className: "participant-card__avatar-wrap" });
+    if (person.avatar && person.avatar.trim() !== ""){
+      const img = el("img", {
+        attrs: {
+          src: person.avatar,
+          alt: person.name ? "Фото: " + person.name : "Фото участника",
+          loading: "lazy"
+        }
+      });
+      avatarWrap.appendChild(img);
+    } else {
+      avatarWrap.appendChild(el("div", {
+        className: "participant-card__avatar-fallback",
+        text: initialsFor(person.name),
+        attrs: { "aria-hidden": "true" }
+      }));
+    }
+    li.appendChild(avatarWrap);
+
+    li.appendChild(el("h3", { className: "participant-card__name", text: person.name || "" }));
+
+    if (person.role && person.role.trim() !== ""){
+      li.appendChild(el("p", { className: "participant-card__role", text: person.role }));
+    }
+
+    if (person.description && person.description.trim() !== ""){
+      li.appendChild(el("p", { className: "participant-card__desc", text: person.description }));
+    }
+
+    const links = Array.isArray(person.links) ? person.links.filter(l => l && l.url && l.url.trim() !== "") : [];
+    if (links.length){
+      const linksWrap = el("div", { className: "participant-card__links" });
+      links.forEach(l => linksWrap.appendChild(buildLinkPill(l)));
+      li.appendChild(linksWrap);
+    }
+
+    return li;
+  }
+
+  function renderParticipants(){
+    const grid = document.getElementById("participants-grid");
+    grid.innerHTML = "";
+
+    const people = Array.isArray(eventConfig.participants) ? eventConfig.participants : [];
+
+    if (!people.length){
+      grid.appendChild(el("li", {
+        className: "participants-empty",
+        text: "Состав участников появится здесь позже."
+      }));
+      return;
+    }
+
+    people.forEach(person => grid.appendChild(buildParticipantCard(person)));
+  }
+
+  function renderBooking(){
+    const section = document.getElementById("booking");
+    const booking = eventConfig.booking || {};
+
+    if (!booking.url || booking.url.trim() === ""){
+      section.hidden = true;
+      return;
+    }
+
+    section.hidden = false;
+    const btn = document.getElementById("booking-btn");
+    btn.textContent = booking.text && booking.text.trim() !== "" ? booking.text : "Пригласить на выступление";
+    btn.setAttribute("href", booking.url);
+  }
+
+  function renderFooter(){
+    document.getElementById("year").textContent = new Date().getFullYear();
+  }
+
+  function setupReveal(){
+    const revealEls = document.querySelectorAll(".reveal");
+    if (!("IntersectionObserver" in window)){
+      revealEls.forEach(node => node.classList.add("is-visible"));
+      return;
+    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting){
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+
+    revealEls.forEach(node => observer.observe(node));
+  }
+
+  function init(){
+    renderHero();
+    renderEventInfo();
+    renderParticipants();
+    renderBooking();
+    renderFooter();
+    setupReveal();
+  }
+
+  if (document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+</body>
+</html>
